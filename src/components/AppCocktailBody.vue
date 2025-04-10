@@ -1,23 +1,23 @@
 <template>
   <div class="container-body">
     <div>
-      <p class="title">{{ currCoctail.strDrink }}</p>
+      <p class="title">{{ currCocktail.strDrink }}</p>
       <p
-        v-for="description in currCoctail.descriptions"
+        v-for="description in currCocktail.descriptions"
         :key="description"
         class="body"
       >
         {{ description }}
       </p>
       <div class="body-block">
-        <p class="body">Inctructions:</p>
-        <p class="body">{{ currCoctail.strInstructions }}</p>
+        <p class="body">Instructions:</p>
+        <p class="body">{{ currCocktail.strInstructions }}</p>
       </div>
       <p class="title-list">List of ingredients:</p>
       <div class="container-list">
-        <ul class="list-ingridients">
+        <ul class="list-ingredients">
           <li
-            v-for="measure in currCoctail.measures"
+            v-for="measure in currCocktail.measures"
             :key="measure"
           >
             {{ measure }}
@@ -25,7 +25,7 @@
         </ul>
         <ul class="list-ingridients">
           <li
-            v-for="ingredient in currCoctail.ingredients"
+            v-for="ingredient in currCocktail.ingredients"
             :key="ingredient"
           >
             {{ ingredient }}
@@ -35,7 +35,7 @@
     </div>
     <div class="block-img">
       <img
-        :src="currCoctail.strDrinkThumb"
+        :src="currCocktail.strDrinkThumb"
         alt="коктейль"
         class="picture"
         loading="lazy"
@@ -51,22 +51,27 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 const props = defineProps({
-  coctail: {
+  cocktail: {
     type: Object,
     required: true,
   },
 });
 const currVariation = ref(0);
 
-const currCoctail = computed(() => {
-  return props.coctail[currVariation.value];
+const currCocktail = computed(() => {
+  return props.cocktail[currVariation.value];
 });
 
+watch(
+  () => props.cocktail,
+  () => (currVariation.value = 0),
+);
+
 function changeVariation() {
-  if (props.coctail.length > currVariation.value + 1) {
+  if (props.cocktail.length > currVariation.value + 1) {
     currVariation.value++;
   } else {
     currVariation.value = 0;
@@ -79,7 +84,7 @@ function changeVariation() {
   display: flex;
 }
 
-.list-ingridients {
+.list-ingredients {
   list-style: none;
   margin: 0 10px 0 0;
   padding: 0;
