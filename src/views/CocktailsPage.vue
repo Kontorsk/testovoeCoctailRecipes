@@ -13,10 +13,10 @@
       </ul>
     </div>
     <div class="card-body">
-      <app-coctail-body
-        v-if="coctail"
-        :coctail="coctail"
-      ></app-coctail-body>
+      <app-cocktail-body
+        v-if="cocktail"
+        :cocktail="cocktail"
+      />
     </div>
   </div>
 </template>
@@ -25,10 +25,10 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import AppCoctailBody from '@/components/AppCoctailBody.vue';
+import AppCocktailBody from '@/components/AppCocktailBody.vue';
 
 const props = defineProps({
-  coctailId: {
+  cocktailId: {
     type: String,
     default: 'Margarita',
   },
@@ -36,13 +36,13 @@ const props = defineProps({
 
 const router = useRouter();
 const store = useStore();
-const coctail = ref();
+const cocktail = ref();
 const selectDrink = async (item) => {
-  coctail.value = await store.dispatch('loadDrinks', item);
+  cocktail.value = await store.dispatch('loadDrinks', item);
   router.push(`/${item}`);
 };
 
-selectDrink(props.coctailId);
+selectDrink(props.cocktailId);
 </script>
 
 <style>
